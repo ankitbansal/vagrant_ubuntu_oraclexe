@@ -1,0 +1,11 @@
+Vagrant::Config.run do |config|
+  config.vm.box = "vagrant-oneiric"
+  config.vm.host_name = "oraxe.localhost"
+  config.vm.forward_port 22, 41022, :adapter => 1
+  config.vm.network :hostonly, "33.33.33.10", :adapter => 2
+  config.vm.provision :puppet, :module_path => "modules", :options => "--verbose"  do |puppet|
+    puppet.manifests_path = "manifests"
+    puppet.manifest_file  = "site.pp"
+  end
+  config.vm.customize [ "modifyvm", :id, "--name", "dev_env_oraxe" ,"--memory", "2048"]
+end
