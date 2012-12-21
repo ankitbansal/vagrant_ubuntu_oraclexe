@@ -8,4 +8,6 @@ Vagrant::Config.run do |config|
     puppet.manifest_file  = "site.pp"
   end
   config.vm.customize [ "modifyvm", :id, "--name", "dev_env_oraxe" ,"--memory", "2048"]
+  config.vm.share_folder "foo", "/Users", "/Users"
+  config.vm.share_folder "bar", "/var/folders", "/var/folders"
 end

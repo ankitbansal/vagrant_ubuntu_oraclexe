@@ -1,0 +1,4 @@
+#!/bin/bash
+echo $@ > /tmp/paramsi
+echo "ssh vagrant@127.0.0.1 -p 41022 'export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe; cd `pwd`/functional; /u01/app/oracle/product/11.2.0/xe/bin/sqlldr $@'" > /tmp/cmd
+ssh vagrant@127.0.0.1 -p 41022 "export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe; cd `pwd`; /u01/app/oracle/product/11.2.0/xe/bin/sqlldr $@"
