@@ -1,13 +1,14 @@
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   config.vm.box = "vagrant-oneiric"
-  config.vm.host_name = "oraxe.localhost"
-  config.vm.forward_port 22, 41022, :adapter => 1
-  config.vm.network :hostonly, "33.33.33.10", :adapter => 2
+  config.vm.network :forwarded_port, guest:22, host:41022
+  config.vm.network :private_network, ip: "33.33.33.10"
   config.vm.provision :puppet, :module_path => "modules", :options => "--verbose"  do |puppet|
     puppet.manifests_path = "manifests"
     puppet.manifest_file  = "site.pp"
   end
-  config.vm.customize [ "modifyvm", :id, "--name", "dev_env_oraxe" ,"--memory", "2048"]
-  config.vm.share_folder "foo", "/Users", "/Users"
-  config.vm.share_folder "bar", "/var/folders", "/var/folders"
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--name", "dev_env_oraxe", "--memory", "2048"]
+  end
+  config.vm.synced_folder "/Users", "/Users"
+  config.vm.synced_folder "/var/folders", "/var/folders"
 end
