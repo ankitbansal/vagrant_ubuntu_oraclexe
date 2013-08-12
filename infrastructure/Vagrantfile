@@ -1,5 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "vagrant-oneiric"
+  config.vm.hostname = "oraxe.localhost"
   config.vm.network :forwarded_port, guest:22, host:41022
   config.vm.network :private_network, ip: "33.33.33.10"
   config.vm.provision :puppet, :module_path => "modules", :options => "--verbose"  do |puppet|
